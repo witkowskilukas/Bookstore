@@ -26,7 +26,7 @@ class HomePageTests(SimpleTestCase):
         self.assertNotContains(self.response, "ala lepi pierogi")
 
     def test_homepage_url_resolves_homepageview(self):
-        view = resolve('/')
+        view = resolve('/')     #view przekształca adres url i zwraca powiązany z nim view
         self.assertEqual(
             view.func.__name__,
             HomePageView.as_view().__name__
