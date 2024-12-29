@@ -1,10 +1,12 @@
 {% extends '_base.html' %}
+{% load static %}
 
 {% block title%}Home{% endblock title %}
 
 
 {% block content%}
 <h1>Homepage</h1>
+<img class = 'bookcover' src="{% static 'images/background.jpg' %}">
 {% if user.is_authenticated %}
     Hi {{ user.email }}
     <form action="{% url 'logout' %}" method="post">  <!--od wersji django 5 nie ma już możliwośći zwykłęgo odniesienia się do "logout"/get. potrzebny jest post-->
