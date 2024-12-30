@@ -9,3 +9,7 @@ p {color:blue;
     height: 300px;
     width: auto;
 }
+
+.navlink {
+    color: red;
+}
