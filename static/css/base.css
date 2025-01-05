@@ -1,8 +1,8 @@
 h1 {
-    color: aqua;
+    color: rgb(40, 44, 44);
 }
 
-p {color:blue;
+p {color:rgb(146, 146, 165);
 }
 
 .bookcover {
@@ -11,5 +11,5 @@ p {color:blue;
 }
 
 .navlink {
-    color: red;
+    color: rgb(112, 66, 66);
 }

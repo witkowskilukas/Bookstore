@@ -1,21 +1,17 @@
 {% extends '_base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title%}Home{% endblock title %}
 
-
-{% block content%}3
+{% block content %}
 <h1>Homepage</h1>
-<img class = 'bookcover' src="{% static 'images/background.jpg' %}">
+<img class='bookcover' src="{% static 'images/background.jpg' %}">
 {% if user.is_authenticated %}
-    Hi {{ user.email }}
-    <form action="{% url 'logout' %}" method="post">  <!--od wersji django 5 nie ma już możliwośći zwykłęgo odniesienia się do "logout"/get. potrzebny jest post-->
-        {% csrf_token %}
-        <button type="submit">Log Out</button>
-    </form>     
+   <p>Hi {{ user.username.capitalize }}</p>
 {% else %}
     <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log in</a>
-    <a href="{% url 'signup' %}">Sign Up</a>
+    <a href="{% url 'account_login' %}">Log in</a>
+    <a href="{% url 'account_signup' %}">Sign Up</a>
 {% endif %}
 {% endblock content %}
