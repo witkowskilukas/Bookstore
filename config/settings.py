@@ -163,8 +163,16 @@ AUTHENTICATION_BACKENDS = (
    
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # Send email to console instead of sending it to the user
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # Send email to console instead of sending it to the user
+DEFAULT_FROM_EMAIL = "admin.djangobookstore.com"
 ACCOUNT_SESSION_REMEMBER = True
+#MAILTRAP PROVIDER CONFIGURATION
+
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = 'bc0a59fa14d711'
+EMAIL_HOST_PASSWORD = '8c53459ba7f0ba'
+EMAIL_PORT = '2525'
+########################
 
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
