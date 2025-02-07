@@ -5,6 +5,9 @@
     <h1>Book details</h1>
    <p>{{ book.title }} {{ book.author }}</p>
    <p>This book costs {{ book.price }}</p>
+   {% if book.cover %}
+   <img clas=""bookcover src="{{ book.cover.url }}" alt="book.title"></img>
+    {% endif %}
     <h1>Reviews</h1>
     <ul>
     {% for review in book.reviews.all %}

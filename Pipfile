@@ -15,6 +15,7 @@ PyJWT = "*"
 django-allauth = {extras = ["socialaccount"], version = "*"}
 environs = "*"
 dj-database-url = "*"
+pillow = "*"
 
 [dev-packages]
 
