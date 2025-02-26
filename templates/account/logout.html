@@ -5,7 +5,7 @@
 
 {% block content %}
 <h1>Log out</h1>
-<p>Are you sure that you want to log out?</p>
+<p>{{ user.username.capitalize }} are you sure that you want to log out?</p>
 <form method="post" action="{% url 'account_logout' %}">
     {% csrf_token %}
     {{ form|crispy }}
