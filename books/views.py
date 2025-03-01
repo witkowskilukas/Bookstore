@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import Book
+from django.db.models import Q
 
 
 
@@ -22,3 +23,15 @@ class BookDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
     def get_permission_denied_message(self):
         return "Not allowed here!!!!"
+    
+class SearchListView(ListView):
+    template_name = 'books/search.html'
+    model = Book
+    context_object_name = 'search'
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        return Book.objects.filter(
+            Q(title__icontains=query) | Q(author__icontains=query)
+        )
+    
