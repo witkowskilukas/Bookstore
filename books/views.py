@@ -12,14 +12,12 @@ class BookListView(LoginRequiredMixin, ListView):
     model = Book
     login_url = "account_login"
     
-    
-
 class BookDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Book
     template_name = "books/book_details.html"
     login_url = "account_login"
     permission_required = "books.special_status"
-    permission_denied_message ="asdasdasdasdas"
+    queryset = Book.objects.all().prefetch_related("reviews__author")
 
     def get_permission_denied_message(self):
         return "Not allowed here!!!!"
@@ -30,8 +28,8 @@ class SearchListView(ListView):
     context_object_name = 'search'
 
     def get_queryset(self):
-        query = self.request.GET.get("q")
-        return Book.objects.filter(
-            Q(title__icontains=query) | Q(author__icontains=query)
-        )
-    
+        query = self.request.GET.get("q") # pobiera wartość z nazwy input w forms z _base.html. GET to słownik
+        searched_book = Book.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))
+        return searched_book
+     
+       

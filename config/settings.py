@@ -14,6 +14,7 @@ from pathlib import Path
 from django.urls import reverse_lazy
 from environs import Env
 
+
 env = Env()
 env.read_env()
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'debug_toolbar',
 # My apps
     'accounts',
     'pages',
@@ -68,6 +70,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Add the account middleware:
     "allauth.account.middleware.AccountMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -201,3 +204,7 @@ SOCIALACCOUNT_PROVIDERS = {
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+#django_toolbar conf
+import socket
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]

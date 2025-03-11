@@ -21,12 +21,19 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # Django admin
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     # User management
-    path('accounts/', include('allauth.urls')),
-  
+    path("accounts/", include("allauth.urls")),
     # Local apps
-    path('', include('pages.urls')),
-    path('books/', include('books.urls'))
- 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("", include("pages.urls")),
+    path("books/", include("books.urls")),
+] + static(
+    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+) 
+
+if settings.DEBUG: # new
+    import debug_toolbar
+
+    urlpatterns = [
+        path("__debug__/", include(debug_toolbar.urls)),
+    ] + urlpatterns

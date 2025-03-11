@@ -16,6 +16,7 @@ django-allauth = {extras = ["socialaccount"], version = "*"}
 environs = "*"
 dj-database-url = "*"
 pillow = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 
