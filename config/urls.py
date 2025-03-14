@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # Django admin
-    path("admin/", admin.site.urls),
+    path("just_casual_admin/", admin.site.urls),
     # User management
     path("accounts/", include("allauth.urls")),
     # Local apps
