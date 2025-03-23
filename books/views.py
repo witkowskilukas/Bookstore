@@ -22,7 +22,8 @@ class BookDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     def get_permission_denied_message(self):
         return "Not allowed here!!!!"
     
-class SearchListView(ListView):
+
+class SearchListView(LoginRequiredMixin, ListView):
     template_name = 'books/search.html'
     model = Book
     context_object_name = 'search'

@@ -17,6 +17,9 @@ environs = "*"
 dj-database-url = "*"
 pillow = "*"
 django-debug-toolbar = "*"
+whitenoise = "*"
+django-storages = "*"
+gunicorn = "*"
 
 [dev-packages]
 

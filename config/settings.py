@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic', # musi być przed contrib.staticfiles
     'django.contrib.staticfiles',
     'django.contrib.sites',
 # Thrid party apps
@@ -62,6 +63,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -145,6 +147,7 @@ STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
 STATICFILES_FINDERS = ['django.contrib.staticfiles.finders.FileSystemFinder',
                        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
                        ]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -157,17 +160,21 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 LOGIN_REDIRECT_URL = 'home'
+
 # allauth settings
 ACCOUNT_LOGOUT_REDIRECT = 'home' 
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False 
 SITE_ID = 1 # Set the default site ID   
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+
    
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # Send email to console instead of sending it to the user
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
 DEFAULT_FROM_EMAIL = "admin.djangobookstore.com"
 ACCOUNT_SESSION_REMEMBER = True
 #MAILTRAP PROVIDER CONFIGURATION
@@ -178,14 +185,13 @@ EMAIL_HOST_PASSWORD = '8c53459ba7f0ba'
 EMAIL_PORT = '2525'
 ########################
 
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SIGNUP_FIELDS = ['username*', 'email', 'password1*', 'password2*']
 ACCOUNT_ALOGIN_METHODS = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 
 #Social acoount settings
-SOCIALACCOUNT_QUERY_EMAIL=ACCOUNT_EMAIL_REQUIRED
-SOCIALACCOUNT_EMAIL_REQUIRED=ACCOUNT_EMAIL_REQUIRED
+SOCIALACCOUNT_QUERY_EMAIL=ACCOUNT_SIGNUP_FIELDS
+SOCIALACCOUNT_EMAIL_REQUIRED=ACCOUNT_SIGNUP_FIELDS
 SOCIALACCOUNT_STORE_TOKENS=False
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -195,7 +201,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'email',
         ],
         'AUTH_PARAMS': {
-            'access_type': 'offline',
+            'access_type': 'online',
         },
         'OAUTH_PKCE_ENABLED': True,
     }
