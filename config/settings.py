@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic', # musi być przed contrib.staticfiles
     'django.contrib.staticfiles',
     'django.contrib.sites',
+ 
 # Thrid party apps
     'crispy_forms',
     'crispy_bootstrap5',
@@ -162,11 +163,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 LOGIN_REDIRECT_URL = 'home'
 
 # allauth settings
-ACCOUNT_LOGOUT_REDIRECT = 'home' 
-SITE_ID = 1 # Set the default site ID   
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # Options: 'mandatory', 'optional', 'none'
+ACCOUNT_LOGIN_METHODS = {'username'}
+ACCOUNT_SIGNUP_FIELDS = ['username*', 'email', 'password1*', 'password2*']
+
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -185,9 +187,6 @@ EMAIL_HOST_PASSWORD = '8c53459ba7f0ba'
 EMAIL_PORT = '2525'
 ########################
 
-ACCOUNT_SIGNUP_FIELDS = ['username*', 'email', 'password1*', 'password2*']
-ACCOUNT_ALOGIN_METHODS = 'email'
-ACCOUNT_UNIQUE_EMAIL = True
 
 #Social acoount settings
 SOCIALACCOUNT_QUERY_EMAIL=ACCOUNT_SIGNUP_FIELDS

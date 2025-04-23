@@ -6,9 +6,9 @@
 
 {% block content %}
 <h1>Homepage</h1>
-<img class='bookcover' src="{% static 'images/background.jpg' %}">
 {% if user.is_authenticated %}
    <p>Hi {{ user.username.capitalize }}</p>
+   <p>Here you can check our <a href="{% url 'books' %}">Books</a></p>
 {% else %}
     <p>You are not logged in</p>
     <a href="{% url 'account_login' %}">Log in</a>
