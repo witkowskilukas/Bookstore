@@ -1,0 +1,17 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title%}Home{% endblock title %}
+
+{% block content %}
+<h1>Homepage</h1>
+{% if user.is_authenticated %}
+   <p>Hi {{ user.username.capitalize }}</p>
+   <p>Here you can check our <a href="{% url 'books' %}">Books</a></p>
+{% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'account_login' %}">Log in</a>
+    <a href="{% url 'account_signup' %}">Sign Up</a>
+{% endif %}
+{% endblock content %}

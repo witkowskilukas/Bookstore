@@ -1,0 +1,17 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}About{% endblock title %}
+
+{% block content %}
+<h1>About Page<h1>
+<p class="about_p">Hello {{user.username.capitalize}}</p>
+<p class="about_p">You are looking at Bookstore website project</p>
+<p class="about_p">Built with:</p>
+    <ul>
+        <li class="about_li">Django framework</li>
+        <li class="about_li">Docker</li>
+        <li class="about_li">HTML/DTL, CSS/bootstrap</li>
+    </ul>
+<p class="about_p">Please <a href="{% url 'account_signup' %}">sign up</a> or <a href="{% url 'account_login' %}">log in </a>to check all functionalities</p>
+{% endblock content %}

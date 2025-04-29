@@ -1,0 +1,42 @@
+.bg-image {
+    background-image: url('/static/images/background.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Full viewport height */
+    width: 100%; /* Full width */
+}
+
+h1 {
+    color: rgb(0, 0, 0);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+   
+    
+}
+
+p {color:rgb(0, 0, 0);
+    font-size: large;
+}
+
+.bookcover {
+    height: 400px;
+    width: auto;
+    display: inline;
+
+}
+
+.navlink {
+    color: rgb(112, 66, 66);
+}
+
+.about_p {
+    color: rgb(0, 0, 0);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+}
+
+.about_li {
+    color: rgb(0, 0, 0);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+}

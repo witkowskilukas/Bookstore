@@ -4,8 +4,22 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
-psycopg2-binary = "*"
+django = "==5.0.9"
+psycopg2-binary = "==2.9.10"
+asgiref = "==3.8.1"
+sqlparse = "==0.5.1"
+django-crispy-forms = "==2.3"
+crispy-bootstrap5 = "==2024.10"
+requests = "*"
+PyJWT = "*"
+django-allauth = {extras = ["socialaccount"], version = "*"}
+environs = "*"
+dj-database-url = "*"
+pillow = "*"
+django-debug-toolbar = "*"
+whitenoise = "*"
+django-storages = "*"
+gunicorn = "*"
 
 [dev-packages]
 
