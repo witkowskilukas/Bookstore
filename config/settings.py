@@ -11,14 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from django.urls import reverse_lazy
-from environs import Env
-
-
-env = Env()
-env.read_env()
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,13 +19,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-
-
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-!yxi@iptm4^sgkql_!70(1+399-mp-=#u2-@_&o=!+#j=sx3!1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DJANGO_DEBUG", default=False)
- 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','example.com']
+DEBUG = True
+
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -44,36 +36,19 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic', # musi być przed contrib.staticfiles
     'django.contrib.staticfiles',
-    'django.contrib.sites',
- 
-# Thrid party apps
-    'crispy_forms',
-    'crispy_bootstrap5',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'debug_toolbar',
 # My apps
     'accounts',
-    'pages',
-    'books',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Add the account middleware:
-    "allauth.account.middleware.AccountMiddleware",
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -81,7 +56,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,8 +64,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.request',
-                
             ],
         },
     },
@@ -103,7 +76,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default':  env.dj_db_url("DATABASE_URL", default="postgres://postgres@db/postgres")
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT':5432
+    }
 }
 
 
@@ -140,15 +120,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-import pathlib
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),) 
-STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
-STATICFILES_FINDERS = ['django.contrib.staticfiles.finders.FileSystemFinder',
-                       'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-                       ]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -156,72 +129,3 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
-
-CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
-
-LOGIN_REDIRECT_URL = 'home'
-
-# allauth settings
-SITE_ID = 1
-ACCOUNT_EMAIL_VERIFICATION = 'none'  # Options: 'mandatory', 'optional', 'none'
-ACCOUNT_LOGIN_METHODS = {'username'}
-ACCOUNT_SIGNUP_FIELDS = ['username*', 'email', 'password1*', 'password2*']
-
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-
-   
-)
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
-DEFAULT_FROM_EMAIL = "admin.djangobookstore.com"
-ACCOUNT_SESSION_REMEMBER = True
-#MAILTRAP PROVIDER CONFIGURATION
-
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = 'bc0a59fa14d711'
-EMAIL_HOST_PASSWORD = '8c53459ba7f0ba'
-EMAIL_PORT = '2525'
-########################
-
-
-#Social acoount settings
-SOCIALACCOUNT_QUERY_EMAIL=ACCOUNT_SIGNUP_FIELDS
-SOCIALACCOUNT_EMAIL_REQUIRED=ACCOUNT_SIGNUP_FIELDS
-SOCIALACCOUNT_STORE_TOKENS=False
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'OAUTH_PKCE_ENABLED': True,
-    }
-}
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
-
-#django_toolbar conf
-import socket
-hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
-
-
-SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
-
-#HSTS configuration
-SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS",default=2592000)
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS",default=True)
-SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
-
-# Cookiese conf/for production
-SESSION_COOKIE_SECURE = env.bool("DJANGO_SESSION_COOKIE_SECURE", default=True)
-CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)

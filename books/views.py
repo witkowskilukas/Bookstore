@@ -13,6 +13,7 @@ class BookListView(LoginRequiredMixin, ListView):
     template_name = 'books/books.html'
     model = Book
     login_url = "account_login"
+    ordering = ['title']
     
 class BookDetailView(LoginRequiredMixin, DetailView):
     model = Book
