@@ -7,8 +7,6 @@ from .forms import ReviewModelForm
 from django.db.models import Q
 from django.urls import reverse_lazy
 
-
-
 class BookListView(LoginRequiredMixin, ListView):
     template_name = 'books/books.html'
     model = Book
